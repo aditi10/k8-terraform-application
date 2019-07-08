@@ -9,9 +9,7 @@ Workstation Prerequisite
 4. Configure Ansible
 5. Configure kubectl
  
-
-
-#TERRAFORM
+# TERRAFORM
 
 Using terraform spawn a 3 Node K8 CLuster
 git clone git@github.com:aditi10/k8-terraform-application.git
@@ -25,9 +23,9 @@ terraform init
 terraform plan
 terraform apply
 
+# KUBESPRAY
 
-#KUBESPRAY
-WAY2- Install Kubernetes cluster containing 2 Masters, 3 etcd, 3 nodes cluster  using kubespray
+Install Kubernetes cluster containing 2 Masters, 3 etcd, 3 nodes cluster  using kubespray
 
 Git clone https://github.com/kubernetes-sigs/kubespray.git
 sudo pip install -r requirements.txt
@@ -46,9 +44,8 @@ sudo su -
 
 kubectl get nodes
 
+# Create a CI/CD pipeline using Jenkins (or a CI tool of your choice) outside Kubernetes cluster (not as a pod inside Kubernetes cluster).
 
-
-``Create a CI/CD pipeline using Jenkins (or a CI tool of your choice) outside Kubernetes cluster (not as a pod inside Kubernetes cluster).``
 Spawn Jenkins server on one of the k8 masters
 
 ssh in K8-master node1
@@ -56,16 +53,14 @@ Installed jenkins on server using a script.
 Vi jenkins.sh
 ./jenkins.sh
 
+# Create a development namespace.
 
-
-``Create a development namespace.``
 From Workstation
 kubectl create namespace development
 kubectl get namespace
 
 
-
-``Deploy guest-book application (or any other application which you think is more suitable to showcase your ability, kindly justify why you have chosen a different application) in the development namespace.``
+# Deploy guest-book application (or any other application which you think is more suitable to showcase your ability, kindly justify why you have chosen a different application) in the development namespace.
 
 Ssh one of kubernetes nodes if workstation is not setup with kubectl cli
 
@@ -152,25 +147,20 @@ Content-Length: 921
 Vary: Accept-Encoding
 Content-Type: text/html
 
-
-
-``Install and configure Helm in Kubernetes``
+# Install and configure Helm in Kubernetes
 
 Cd  helm
 ./helm_install.sh
 This installs helm on cluster
 
 
-
-``Use Helm to deploy the application on Kubernetes Cluster from CI server.``
+# Use Helm to deploy the application on Kubernetes Cluster from CI server.
 
 Create a monitoring namespace in the cluster
-
 Kubectl create namespace monitoring
 
 
-
-``Setup Prometheus (in monitoring namespace) for gathering host/container metrics along with health check status of the application. ``
+# Setup Prometheus (in monitoring namespace) for gathering host/container metrics along with health check status of the application. 
 
 helm repo update
 helm install stable/prometheus \
@@ -191,7 +181,8 @@ Get the Prometheus server URL by running these commands in the same shell:
 
 Create a dashboard using Grafana to help visualize the Node/Container/API Server etc. metrices from Prometheus server. Optionally create a custom dashboard on Grafana
 
-For GRAFANA
+# GRAFANA
+
 Git clone https://github.com/helm/charts.git
 
 cd helm/charts/grafana/
@@ -219,8 +210,6 @@ u13YsgaH64JWDe0rx8bBAyfAdEB99ODVK9YNhQL1
 ######            the Grafana pod is terminated.                            #####
 #################################################################################
 
-
-
 http://34.252.206.133:30966/?orgId=1
 
 
@@ -233,17 +222,15 @@ For container metrics
  https://prometheus.io/docs/guides/cadvisor/
 rate(container_network_transmit_bytes_total[1m])
 
+# Setup log analysis using Elasticsearch, Fluentd (or Filebeat), Kibana.
 
-
-
-``Setup log analysis using Elasticsearch, Fluentd (or Filebeat), Kibana.``
 cd elasticsearch-fluentd-kibana/elasticsearch
 ./resource_creation.sh
 
 nohup kubectl port-forward es-cluster-0 9200:9200 --namespace=log&
 curl http://localhost:9200/_cluster/state?pretty
 
-``Creating the Kibana Deployment and Service``
+# Creating the Kibana Deployment and Service
 
 cd kibana-fluentd
 kubectl create -f kibana.yaml
@@ -251,12 +238,11 @@ Nohup kubectl port-forward kibana-6c9fb4b5b7-plbg2 5601:5601 --namespace=log&
 
 http://34.252.206.133:30677/app/kibana#/home?_g=()
 
-``Deploy Fluentd Daemon set``
+# Deploy Fluentd Daemon set
+
 kubectl create -f fluentd.yaml
 
-
-
-``Demonstrate Blue/Green and Canary deployment for the application (For e.g. Change the background color or font in the new version etc.,)``
+# Demonstrate Blue/Green and Canary deployment for the application (For e.g. Change the background color or font in the new version etc.,)
 
 This can be either done with help of spinnaker or Istio.
 When a new version of application is launched. Make few users to point to new version of application using Loadbalancer on specific port.
