@@ -11,7 +11,7 @@ Workstation Prerequisite
  
 
 
-``TERRAFORM``
+#TERRAFORM
 
 Using terraform spawn a 3 Node K8 CLuster
 git clone git@github.com:aditi10/k8-terraform-application.git
@@ -26,7 +26,7 @@ terraform plan
 terraform apply
 
 
-``KUBESPRAY``
+#KUBESPRAY
 WAY2- Install Kubernetes cluster containing 2 Masters, 3 etcd, 3 nodes cluster  using kubespray
 
 Git clone https://github.com/kubernetes-sigs/kubespray.git
